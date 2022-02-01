@@ -36,7 +36,18 @@ namespace LogAplicacao.Controllers
             {
                 return StatusCode(400, "Tamanho de nome de Usuário inválido!");
             }
-            _sql.CatalogarErro(erro);
+            try
+            {
+                _sql.CatalogarErro(erro);
+            }
+            catch (InvalidOperationException)
+            {
+                return StatusCode(400, "Dados incorretos!");
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Algo deu errado!");
+            }
             return StatusCode(200);
         }
     }
